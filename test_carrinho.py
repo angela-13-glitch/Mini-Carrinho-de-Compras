@@ -17,7 +17,17 @@ class TestCarrinho(unittest.TestCase):
             Produto("Banana", 2, 0)
         with self.assertRaises(TypeError):
             Produto("Banana", "2", 3)
-            
 
+    def test_somar_quantidades_mesmo_produto(self):
+        carrinho = Carrinho()
+        carrinho.adicionar_produto(Produto("Maçã", 2.5, 2))
+        carrinho.adicionar_produto(Produto("Maçã", 2.5, 3))
+        self.assertEqual(carrinho.itens["Maçã"].quantidade, 5)
+
+    def test_remover_produto(self):
+        carrinho = Carrinho()
+        carrinho.adicionar_produto(Produto("Pera", 3.0, 2))
+        carrinho.remover_produto("Pera")
+        self.assertEqual(len(carrinho.itens), 0)
 if __name__ == "__main__":
     unittest.main()
