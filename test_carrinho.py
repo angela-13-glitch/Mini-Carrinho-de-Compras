@@ -1,3 +1,4 @@
+
 import unittest
 from carrinho import Carrinho, Produto
 
@@ -29,5 +30,12 @@ class TestCarrinho(unittest.TestCase):
         carrinho.adicionar_produto(Produto("Pera", 3.0, 2))
         carrinho.remover_produto("Pera")
         self.assertEqual(len(carrinho.itens), 0)
+
+    def test_calcular_total(self):
+        carrinho = Carrinho()
+        carrinho.adicionar_produto(Produto("Maçã", 2.0, 2))
+        carrinho.adicionar_produto(Produto("Banana", 3.0, 1))
+        self.assertEqual(carrinho.calcular_total(), 7.0)
+
 if __name__ == "__main__":
     unittest.main()
