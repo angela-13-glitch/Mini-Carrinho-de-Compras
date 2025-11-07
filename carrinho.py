@@ -1,28 +1,41 @@
 class Produto:
+ 
+
     def __init__(self, nome: str, preco: float, quantidade: int):
-        if not isinstance(preco, (int, float)) or not isinstance(quantidade, int):
-            raise TypeError("Preço deve ser numérico e quantidade deve ser inteira.")
+        if not isinstance(preco, (int, float)):
+            raise TypeError
+        if not isinstance(quantidade, int):
+            raise TypeError
         if preco <= 0 or quantidade <= 0:
-            raise ValueError("Preço e quantidade devem ser maiores que zero.")
+            raise ValueError
         self.nome = nome
-        self.preco = preco
+        self.preco = float(preco)
         self.quantidade = quantidade
+
+    def subtotal(self) -> float:
+       
+        return self.preco * self.quantidade
 
 
 class Carrinho:
-    def __init__(self):
-        self.itens = {}
+ 
 
-    def adicionar_produto(self, produto: Produto):
-        if produto.nome in self.itens:
-            self.itens[produto.nome].quantidade += produto.quantidade
+    def __init__(self):
+        self.itens: dict[str, Produto] = {}
+
+    def adicionar_produto(self, produto: Produto) -> None:
+      
+        existente = self.itens.get(produto.nome)
+        if existente:
+            existente.quantidade += produto.quantidade
         else:
             self.itens[produto.nome] = produto
 
-    def remover_produto(self, nome_produto: str):
-        if nome_produto in self.itens:
-            del self.itens[nome_produto]
+    def remover_produto(self, nome_produto: str) -> None:
+    
+        self.itens.pop(nome_produto, None)
 
     def calcular_total(self) -> float:
-        return sum(p.preco * p.quantidade for p in self.itens.values())
+      
+        return sum(produto.subtotal() for produto in self.itens.values())
 
