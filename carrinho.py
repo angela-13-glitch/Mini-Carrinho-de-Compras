@@ -7,4 +7,22 @@ class Produto:
         self.nome = nome
         self.preco = preco
         self.quantidade = quantidade
-        
+
+
+class Carrinho:
+    def __init__(self):
+        self.itens = {}
+
+    def adicionar_produto(self, produto: Produto):
+        if produto.nome in self.itens:
+            self.itens[produto.nome].quantidade += produto.quantidade
+        else:
+            self.itens[produto.nome] = produto
+
+    def remover_produto(self, nome_produto: str):
+        if nome_produto in self.itens:
+            del self.itens[nome_produto]
+
+    def calcular_total(self) -> float:
+        return sum(p.preco * p.quantidade for p in self.itens.values())
+
